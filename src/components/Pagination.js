@@ -45,10 +45,11 @@ export default class Pagination extends React.Component {
   render() {
     const start = this.props.currentPage * this.props.pageSize + 1;
     const end = start + this.props.pageSize - 1;
+    const count = this.props.count;
 
     return (
       <div>
-        <span>Exibindo {start} a {end} de {this.props.count} registros.</span>
+        <span>Exibindo {start} a {end > count ? count : end} de {count} registros.</span>
         <a onClick={this.handleClickPage.bind(this, 1)} href="#">Primeiro</a>
         <a onClick={this.handleClickPage.bind(this, this.currentPage() - 1)} href="#">Anterior</a>
         {this.renderPages()}

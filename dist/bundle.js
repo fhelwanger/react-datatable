@@ -19878,6 +19878,7 @@
 	    value: function render() {
 	      var start = this.props.currentPage * this.props.pageSize + 1;
 	      var end = start + this.props.pageSize - 1;
+	      var count = this.props.count;
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -19888,9 +19889,9 @@
 	          'Exibindo ',
 	          start,
 	          ' a ',
-	          end,
+	          end > count ? count : end,
 	          ' de ',
-	          this.props.count,
+	          count,
 	          ' registros.'
 	        ),
 	        _react2['default'].createElement(
