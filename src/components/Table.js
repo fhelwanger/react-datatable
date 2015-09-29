@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Table extends React.Component {
   renderHeader(column, index) {
-    return <th key={index}>{column.header}</th>;
+    return <th key={index} onClick={() => this.props.onChangeSort(column.key)}>{column.header}</th>;
   }
 
   renderRow(row) {
