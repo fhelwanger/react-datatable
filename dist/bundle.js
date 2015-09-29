@@ -19835,9 +19835,23 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var start = this.props.currentPage * this.props.pageSize + 1;
+	      var end = start + this.props.pageSize - 1;
+
 	      return _react2['default'].createElement(
 	        'div',
 	        null,
+	        _react2['default'].createElement(
+	          'span',
+	          null,
+	          'Exibindo ',
+	          start,
+	          ' a ',
+	          end,
+	          ' de ',
+	          this.props.count,
+	          ' registros.'
+	        ),
 	        _react2['default'].createElement(
 	          'a',
 	          { onClick: this.handleClickPage.bind(this, 1), href: '#' },
