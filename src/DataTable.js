@@ -11,6 +11,7 @@ export default class DataTable extends React.Component {
       sortKey: '',
       sortDirection: '',
       currentPage: 0,
+      pageSize: props.pageSize,
       filteredData: [...props.data]
     }
   }
@@ -19,6 +20,13 @@ export default class DataTable extends React.Component {
     this.setState({
       currentPage: 0,
       filteredData: this.filterData(filter)
+    });
+  }
+
+  onChangePageSize(size) {
+    this.setState({
+      currentPage: 0,
+      pageSize: size
     });
   }
 
@@ -75,8 +83,8 @@ export default class DataTable extends React.Component {
       });
     }
 
-    const sliceStart = this.state.currentPage * this.props.pageSize;
-    const sliceEnd = sliceStart + this.props.pageSize;
+    const sliceStart = this.state.currentPage * this.state.pageSize;
+    const sliceEnd = sliceStart + this.state.pageSize;
 
     return data.slice(sliceStart, sliceEnd);
   }
@@ -85,15 +93,17 @@ export default class DataTable extends React.Component {
     return (
       <div>
         <SearchBar
-          onChange={this.onChangeFilter.bind(this)} />
+          onChangeFilter={this.onChangeFilter.bind(this)}
+          onChangePageSize={this.onChangePageSize.bind(this)}
+          pageSize={this.state.pageSize} />
         <Table
           data={this.prepareData()}
           columns={this.props.columns}
           onChangeSort={this.onChangeSort.bind(this)} />
         <Pagination
-          onChange={this.onChangePage.bind(this)}
+          onChangePage={this.onChangePage.bind(this)}
           currentPage={this.state.currentPage}
-          pageSize={this.props.pageSize}
+          pageSize={this.state.pageSize}
           count={this.state.filteredData.length} />
       </div>
     );

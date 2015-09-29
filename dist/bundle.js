@@ -19495,6 +19495,7 @@
 	      sortKey: '',
 	      sortDirection: '',
 	      currentPage: 0,
+	      pageSize: props.pageSize,
 	      filteredData: [].concat(_toConsumableArray(props.data))
 	    };
 	  }
@@ -19505,6 +19506,14 @@
 	      this.setState({
 	        currentPage: 0,
 	        filteredData: this.filterData(filter)
+	      });
+	    }
+	  }, {
+	    key: 'onChangePageSize',
+	    value: function onChangePageSize(size) {
+	      this.setState({
+	        currentPage: 0,
+	        pageSize: size
 	      });
 	    }
 	  }, {
@@ -19567,8 +19576,8 @@
 	        });
 	      }
 
-	      var sliceStart = this.state.currentPage * this.props.pageSize;
-	      var sliceEnd = sliceStart + this.props.pageSize;
+	      var sliceStart = this.state.currentPage * this.state.pageSize;
+	      var sliceEnd = sliceStart + this.state.pageSize;
 
 	      return data.slice(sliceStart, sliceEnd);
 	    }
@@ -19579,15 +19588,17 @@
 	        'div',
 	        null,
 	        _react2['default'].createElement(_componentsSearchBar2['default'], {
-	          onChange: this.onChangeFilter.bind(this) }),
+	          onChangeFilter: this.onChangeFilter.bind(this),
+	          onChangePageSize: this.onChangePageSize.bind(this),
+	          pageSize: this.state.pageSize }),
 	        _react2['default'].createElement(_componentsTable2['default'], {
 	          data: this.prepareData(),
 	          columns: this.props.columns,
 	          onChangeSort: this.onChangeSort.bind(this) }),
 	        _react2['default'].createElement(_componentsPagination2['default'], {
-	          onChange: this.onChangePage.bind(this),
+	          onChangePage: this.onChangePage.bind(this),
 	          currentPage: this.state.currentPage,
-	          pageSize: this.props.pageSize,
+	          pageSize: this.state.pageSize,
 	          count: this.state.filteredData.length })
 	      );
 	    }
@@ -19728,9 +19739,28 @@
 	  }
 
 	  _createClass(SearchBar, [{
-	    key: 'handleOnChange',
-	    value: function handleOnChange(e) {
-	      this.props.onChange(e.currentTarget.value);
+	    key: 'handleOnChangeFilter',
+	    value: function handleOnChangeFilter(e) {
+	      this.props.onChangeFilter(e.currentTarget.value);
+	    }
+	  }, {
+	    key: 'handleOnChangePageSize',
+	    value: function handleOnChangePageSize(e) {
+	      this.props.onChangePageSize(parseInt(e.currentTarget.value));
+	    }
+	  }, {
+	    key: 'renderEntriesPerPage',
+	    value: function renderEntriesPerPage() {
+	      var options = [10, 20, 50];
+	      var currentOption = this.props.pageSize;
+
+	      return options.map(function (x) {
+	        return _react2['default'].createElement(
+	          'option',
+	          { key: x, selected: x === currentOption },
+	          x
+	        );
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -19741,8 +19771,19 @@
 	        _react2['default'].createElement(
 	          'label',
 	          null,
-	          'Filter: ',
-	          _react2['default'].createElement('input', { onChange: this.handleOnChange.bind(this) })
+	          'Exibir',
+	          _react2['default'].createElement(
+	            'select',
+	            { onChange: this.handleOnChangePageSize.bind(this) },
+	            this.renderEntriesPerPage()
+	          ),
+	          'registros.'
+	        ),
+	        _react2['default'].createElement(
+	          'label',
+	          null,
+	          'Pesquisar: ',
+	          _react2['default'].createElement('input', { onChange: this.handleOnChangeFilter.bind(this) })
 	        )
 	      );
 	    }
@@ -19795,7 +19836,7 @@
 	      if (page < 1) page = 1;
 	      if (page > this.totalPages()) page = this.totalPages();
 
-	      this.props.onChange(page - 1);
+	      this.props.onChangePage(page - 1);
 	    }
 	  }, {
 	    key: 'currentPage',
