@@ -1,7 +1,7 @@
 import React from 'react';
-import Table from './datatable/Table';
-import SearchBar from './datatable/SearchBar';
-import Pagination from './datatable/Pagination';
+import Table from './components/Table';
+import SearchBar from './components/SearchBar';
+import Pagination from './components/Pagination';
 
 export default class DataTable extends React.Component {
   constructor(props) {
