@@ -13,7 +13,13 @@ export default class DataTable extends React.Component {
       currentPage: 0,
       pageSize: props.pageSize,
       filteredData: [...props.data]
-    }
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      filteredData: [...nextProps.data]
+    });
   }
 
   onChangeFilter(filter) {
@@ -97,6 +103,7 @@ export default class DataTable extends React.Component {
           onChangePageSize={this.onChangePageSize.bind(this)}
           pageSize={this.state.pageSize} />
         <Table
+          idAttribute={this.props.idAttribute}
           data={this.prepareData()}
           columns={this.props.columns}
           onChangeSort={this.onChangeSort.bind(this)} />

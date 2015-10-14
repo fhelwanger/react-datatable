@@ -11,7 +11,7 @@ export default class Table extends React.Component {
     );
 
     return (
-      <tr key={row.id}>{this.props.columns.map(renderCell)}</tr>
+      <tr key={row[this.props.idAttribute || 'id']}>{this.props.columns.map(renderCell)}</tr>
     );
   }
 

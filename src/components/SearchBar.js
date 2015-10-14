@@ -11,9 +11,8 @@ export default class SearchBar extends React.Component {
 
   renderEntriesPerPage() {
     const options = [10, 20, 50];
-    const currentOption = this.props.pageSize;
-
-    return options.map(x => <option key={x} selected={x === currentOption}>{x}</option>);
+    
+    return options.map(x => <option key={x}>{x}</option>);
   }
 
   render() {
@@ -21,7 +20,7 @@ export default class SearchBar extends React.Component {
       <div>
         <label>
           Exibir
-          <select onChange={this.handleOnChangePageSize.bind(this)}>
+          <select onChange={this.handleOnChangePageSize.bind(this)} value={this.props.pageSize}>
             {this.renderEntriesPerPage()}
           </select>
           registros.
